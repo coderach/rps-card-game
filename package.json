@@ -1,0 +1,51 @@
+{
+  "name": "rps-card-game",
+  "version": "1.0.0",
+  "description": "Rock Paper Scissors Card Game with AI opponents - Console and Web versions",
+  "main": "console/index.js",
+  "scripts": {
+    "start": "node console/index.js",
+    "console": "node console/index.js",
+    "test": "node console/test.js",
+    "test-ai": "node -e \"const {TestRunner} = require('./console/test'); const runner = new TestRunner(); runner.runAIvsAITest().then(() => { runner.displayResults(); process.exit(0); });\"",
+    "test-random": "node -e \"const {TestRunner} = require('./console/test'); const runner = new TestRunner(); runner.runAIvsRandomTest().then(() => { runner.displayResults(); process.exit(0); });\"",
+    "test-multi": "node -e \"const {TestRunner} = require('./console/test'); const runner = new TestRunner(); runner.runAIvsAIMultiTest().then(() => { runner.displayResults(); process.exit(0); });\"",
+    "test-all": "node -e \"const {TestRunner, CardAnalysis} = require('./console/test'); CardAnalysis.analyzeAllCards(); const runner = new TestRunner(); runner.runAllTests().then(() => process.exit(0));\"",
+    "analyze-cards": "node -e \"const {CardAnalysis} = require('./console/test'); CardAnalysis.analyzeAllCards();\"",
+    "web": "echo 'Open web/index.html in your browser to play the web version'",
+    "serve": "npx http-server web -p 8080 -o"
+  },
+  "keywords": [
+    "game", 
+    "card-game", 
+    "rock-paper-scissors", 
+    "ai", 
+    "strategy",
+    "nft",
+    "blockchain",
+    "cardano",
+    "web-game",
+    "console-game"
+  ],
+  "author": "RPS Card Game Developer",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "directories": {
+    "console": "console",
+    "web": "web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/rps-card-game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/rps-card-game/issues"
+  },
+  "homepage": "https://github.com/yourusername/rps-card-game#readme"
+}

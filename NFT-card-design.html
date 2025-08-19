@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Card Design Demo</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .nft-card {
+            width: 280px;
+            height: 420px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nft-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 255, 255, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nft-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .nft-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            text-align: center;
+            padding: 20px 15px 10px;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+        }
+
+        .card-id {
+            font-size: 14px;
+            color: #00ffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 5px 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .rarity {
+            font-size: 12px;
+            color: #ffd700;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card-artwork {
+            height: 180px;
+            background: radial-gradient(circle at center, 
+                rgba(138, 43, 226, 0.8) 0%,
+                rgba(30, 30, 60, 0.9) 50%,
+                rgba(0, 0, 0, 0.95) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .mystical-figure {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #8a2be2, #4169e1, #00ffff);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 0 30px rgba(138, 43, 226, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .mystical-figure::before {
+            content: '👤';
+            font-size: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .properties-section {
+            padding: 15px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            flex: 1;
+        }
+
+        .properties-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .property {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .property:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .property-icon {
+            font-size: 20px;
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .property-label {
+            font-size: 11px;
+            color: #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 70px;
+            text-align: left;
+        }
+
+        .deception { color: #ff4444; }
+        .magic { color: #8a2be2; }
+        .attack { color: #00ff00; }
+
+        .property-bar-container {
+            flex: 1;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin-left: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .property-bar {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.8s ease;
+            background: linear-gradient(90deg, 
+                currentColor 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                currentColor 100%);
+            position: relative;
+            animation: glow 2s infinite alternate;
+        }
+
+        .property-value {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px currentColor; }
+            100% { box-shadow: 0 0 15px currentColor; }
+        }
+
+        .card-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            padding: 8px;
+            text-align: center;
+        }
+
+        .total-power {
+            color: #ffd700;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .holographic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .nft-card:hover .holographic {
+            opacity: 1;
+        }
+
+        .demo-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-info">
+        <h3>NFT Card Design Demo</h3>
+        <p><strong>Card #23:</strong> Deception 7, Magic 4, Attack 9</p>
+        <p>Features: Mask icon for deception, animated property bars, glowing effects</p>
+        <p><em>Bars scale: 9/9 = 100% width, 7/9 = 77.8% width, etc.</em></p>
+        <p><em>Hover over the card to see effects!</em></p>
+    </div>
+
+    <div class="nft-card">
+        <div class="holographic"></div>
+        
+        <div class="card-header">
+            <div class="card-id">Card #23</div>
+            <div class="card-title">Mystical Warrior</div>
+            <div class="rarity">Epic</div>
+        </div>
+
+        <div class="card-artwork">
+            <div class="mystical-figure"></div>
+        </div>
+
+        <div class="properties-section">
+            <div class="properties-grid">
+                <div class="property">
+                    <span class="property-icon attack">⚔️</span>
+                    <div class="property-label">ATTACK</div>
+                    <div class="property-bar-container">
+                        <div class="property-bar attack" style="width: 100%;">
+                            <div class="property-value">9</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property">
+                    <span class="property-icon magic">✨</span>
+                    <div class="property-label">MAGIC</div>
+                    <div class="property-bar-container">
+                        <div class="property-bar magic" style="width: 44.4%;">
+                            <div class="property-value">4</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property">
+                    <span class="property-icon deception">🎭</span>
+                    <div class="property-label">DECEPTION</div>
+                    <div class="property-bar-container">
+                        <div class="property-bar deception" style="width: 77.8%;">
+                            <div class="property-value">7</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
