@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT God Card Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 40px;
+            background: radial-gradient(circle at 50% 50%, #0a0a23 0%, #000011 100%);
+            font-family: 'Orbitron', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        .demo-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .god-card {
+            width: 320px;
+            height: 480px;
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.1),
+                0 20px 40px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .god-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ff6b35, #7209b7, #560bad, #ffd700);
+            background-size: 400% 400%;
+            border-radius: 22px;
+            z-index: -1;
+            animation: rainbow-border 3s ease infinite;
+        }
+
+        @keyframes rainbow-border {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .god-card:hover {
+            transform: translateY(-15px) rotateY(8deg) scale(1.02);
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.6),
+                inset 0 0 40px rgba(255, 255, 255, 0.2),
+                0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .holographic-overlay {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            transition: 0.6s;
+            pointer-events: none;
+            border-radius: 18px;
+        }
+
+        .god-card:hover .holographic-overlay {
+            left: 100%;
+        }
+
+        .card-header {
+            padding: 20px 20px 10px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 18px 18px 0 0;
+        }
+
+        .god-name {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .mythology {
+            font-size: 12px;
+            color: #b8860b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .god-artwork {
+            height: 260px;
+            background: linear-gradient(45deg, #1a1a2e, #2d1b69, #0f0f23);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 10px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .god-avatar {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, #ffd700 0%, #ff6b35 50%, #560bad 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: divine-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes divine-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+            100% { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 215, 0, 0.9); }
+        }
+
+        .properties-container {
+            padding: 10px 20px 20px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+        }
+
+        .property-orb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-orb:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(8px) scale(1.02);
+            border-color: currentColor;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .property-orb::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .property-orb:hover::before {
+            left: 100%;
+        }
+
+        .property-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 15px;
+            position: relative;
+            animation: orb-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes orb-glow {
+            0% { box-shadow: 0 0 10px currentColor; }
+            100% { box-shadow: 0 0 20px currentColor; }
+        }
+
+        .deception { color: #ff4757; }
+        .deception .property-icon { background: radial-gradient(circle, #ff4757, #ff3742); }
+
+        .magic { color: #5352ed; }
+        .magic .property-icon { background: radial-gradient(circle, #5352ed, #3742fa); }
+
+        .attack { color: #2ed573; }
+        .attack .property-icon { background: radial-gradient(circle, #2ed573, #1dd1a1); }
+
+        .property-info {
+            flex: 1;
+        }
+
+        .property-name {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .property-value {
+            font-size: 20px;
+            font-weight: 900;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .power-total {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .power-label {
+            font-size: 10px;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .power-number {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        .battle-arena {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .arena-title {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .battle-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .vs-indicator {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+            animation: vs-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes vs-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Arena Cards - Smaller God Image, Larger Clickable Properties */
+        .arena-card {
+            width: 280px;
+            height: 420px;
+        }
+
+        .arena-card .god-artwork {
+            height: 140px;
+        }
+
+        .arena-card .god-avatar {
+            width: 80px;
+            height: 80px;
+            font-size: 50px;
+        }
+
+        .arena-card .property-orb {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 30px;
+        }
+
+        .arena-card .property-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 22px;
+            margin-right: 20px;
+        }
+
+        .arena-card .property-name {
+            font-size: 14px;
+        }
+
+        .arena-card .property-value {
+            font-size: 24px;
+        }
+
+        /* Hidden Properties for Opponent */
+        .hidden-property {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .hidden-property .property-value {
+            visibility: hidden;
+        }
+
+        .hidden-property .property-value::after {
+            content: "?";
+            visibility: visible;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+        }
+
+        .revealed-property {
+            animation: property-reveal 0.6s ease-out;
+        }
+
+        @keyframes property-reveal {
+            0% { 
+                opacity: 0.3; 
+                transform: scale(0.8);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Single Card Demo -->
+        <div class="god-card" onclick="selectProperty('deception')">
+            <div class="holographic-overlay"></div>
+            
+            <div class="card-header">
+                <div class="god-name">ZEUS #765</div>
+            </div>
+
+            <div class="god-artwork">
+                <div class="god-avatar">⚡</div>
+            </div>
+
+            <div class="properties-container">
+                <div class="property-orb deception" onclick="event.stopPropagation(); selectProperty('deception')">
+                    <div class="property-icon">🎭</div>
+                    <div class="property-info">
+                        <div class="property-name">Deception</div>
+                        <div class="property-value">7</div>
+                    </div>
+                </div>
+
+                <div class="property-orb magic" onclick="event.stopPropagation(); selectProperty('magic')">
+                    <div class="property-icon">✨</div>
+                    <div class="property-info">
+                        <div class="property-name">Magic</div>
+                        <div class="property-value">9</div>
+                    </div>
+                </div>
+
+                <div class="property-orb attack" onclick="event.stopPropagation(); selectProperty('attack')">
+                    <div class="property-icon">⚔️</div>
+                    <div class="property-info">
+                        <div class="property-name">Attack</div>
+                        <div class="property-value">4</div>
+                    </div>
+                </div>
+
+                <div class="power-total">
+                    <div class="power-label">Divine Power</div>
+                    <div class="power-number">20</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second God Card -->
+        <div class="god-card">
+            <div class="holographic-overlay"></div>
+            
+            <div class="card-header">
+                <div class="god-name">SHIVA #342</div>
+            </div>
+
+            <div class="god-artwork">
+                <div class="god-avatar">🔱</div>
+            </div>
+
+            <div class="properties-container">
+                <div class="property-orb deception">
+                    <div class="property-icon">🎭</div>
+                    <div class="property-info">
+                        <div class="property-name">Deception</div>
+                        <div class="property-value">3</div>
+                    </div>
+                </div>
+
+                <div class="property-orb magic">
+                    <div class="property-icon">✨</div>
+                    <div class="property-info">
+                        <div class="property-name">Magic</div>
+                        <div class="property-value">8</div>
+                    </div>
+                </div>
+
+                <div class="property-orb attack">
+                    <div class="property-icon">⚔️</div>
+                    <div class="property-info">
+                        <div class="property-name">Attack</div>
+                        <div class="property-value">9</div>
+                    </div>
+                </div>
+
+                <div class="power-total">
+                    <div class="power-label">Divine Power</div>
+                    <div class="power-number">20</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Battle Arena Demo -->
+    <div class="battle-arena">
+        <div class="arena-title">⚡ DIVINE BATTLE ARENA ⚡</div>
+        <div class="battle-layout">
+            <!-- Player Card in Arena -->
+            <div class="god-card arena-card">
+                <div class="holographic-overlay"></div>
+                <div class="card-header">
+                    <div class="god-name">THOR #445</div>
+                </div>
+                <div class="god-artwork">
+                    <div class="god-avatar">🔨</div>
+                </div>
+                <div class="properties-container">
+                    <div class="property-orb deception" onclick="playProperty('deception')">
+                        <div class="property-icon">🎭</div>
+                        <div class="property-info">
+                            <div class="property-name">Deception</div>
+                            <div class="property-value">2</div>
+                        </div>
+                    </div>
+                    <div class="property-orb magic" onclick="playProperty('magic')">
+                        <div class="property-icon">✨</div>
+                        <div class="property-info">
+                            <div class="property-name">Magic</div>
+                            <div class="property-value">6</div>
+                        </div>
+                    </div>
+                    <div class="property-orb attack" onclick="playProperty('attack')">
+                        <div class="property-icon">⚔️</div>
+                        <div class="property-info">
+                            <div class="property-name">Attack</div>
+                            <div class="property-value">12</div>
+                        </div>
+                    </div>
+                    <div class="power-total">
+                        <div class="power-label">Divine Power</div>
+                        <div class="power-number">20</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vs-indicator">VS</div>
+
+            <!-- Opponent Card in Arena (Hidden Properties) -->
+            <div class="god-card arena-card">
+                <div class="holographic-overlay"></div>
+                <div class="card-header">
+                    <div class="god-name">ANUBIS</div>
+                </div>
+                <div class="god-artwork">
+                    <div class="god-avatar">🐺</div>
+                </div>
+                <div class="properties-container">
+                    <div class="property-orb deception hidden-property" id="opp-deception">
+                        <div class="property-icon">🎭</div>
+                        <div class="property-info">
+                            <div class="property-name">Deception</div>
+                            <div class="property-value" style="position: relative;">8</div>
+                        </div>
+                    </div>
+                    <div class="property-orb magic hidden-property" id="opp-magic">
+                        <div class="property-icon">✨</div>
+                        <div class="property-info">
+                            <div class="property-name">Magic</div>
+                            <div class="property-value" style="position: relative;">6</div>
+                        </div>
+                    </div>
+                    <div class="property-orb attack hidden-property" id="opp-attack">
+                        <div class="property-icon">⚔️</div>
+                        <div class="property-info">
+                            <div class="property-name">Attack</div>
+                            <div class="property-value" style="position: relative;">6</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="revealOpponentProperty('deception')" style="margin: 5px; padding: 10px 20px; background: #ff4757; border: none; border-radius: 20px; color: white; cursor: pointer;">Reveal Deception</button>
+            <button onclick="revealOpponentProperty('magic')" style="margin: 5px; padding: 10px 20px; background: #5352ed; border: none; border-radius: 20px; color: white; cursor: pointer;">Reveal Magic</button>
+            <button onclick="revealOpponentProperty('attack')" style="margin: 5px; padding: 10px 20px; background: #2ed573; border: none; border-radius: 20px; color: white; cursor: pointer;">Reveal Attack</button>
+        </div>
+    </div>
+
+    <script>
+        function selectProperty(property) {
+            console.log(`Selected property: ${property}`);
+            
+            // Add visual feedback
+            event.target.closest('.property-orb').style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                if (event.target.closest('.property-orb')) {
+                    event.target.closest('.property-orb').style.transform = '';
+                }
+            }, 150);
+        }
+
+        function playProperty(property) {
+            console.log(`Playing property: ${property} in arena`);
+            
+            // Highlight selected property
+            const propertyOrb = event.target.closest('.property-orb');
+            propertyOrb.style.boxShadow = '0 0 30px currentColor';
+            propertyOrb.style.transform = 'scale(1.05)';
+            
+            // Simulate opponent reveal after a delay
+            setTimeout(() => {
+                revealOpponentProperty(property);
+            }, 1000);
+        }
+
+        function revealOpponentProperty(property) {
+            const oppElement = document.getElementById(`opp-${property}`);
+            if (oppElement) {
+                oppElement.classList.remove('hidden-property');
+                oppElement.classList.add('revealed-property');
+                console.log(`Revealed opponent's ${property}`);
+            }
+        }
+
+        // Add some interactive magic
+        document.querySelectorAll('.god-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

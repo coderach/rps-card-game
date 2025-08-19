@@ -469,3 +469,111 @@ h1 {
         font-size: 0.8rem;
     }
 }
+
+
+/* Property Selection UI Styles */
+.property-selection-ui {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    animation: glow-border 2s infinite alternate;
+}
+
+.property-selection-ui h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.property-selection-ui p {
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+@keyframes glow-border {
+    0% { border-color: rgba(0, 255, 255, 0.3); }
+    100% { border-color: rgba(0, 255, 255, 0.7); }
+}
+
+/* Round Results Enhanced Styling */
+.round-results {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.round-result-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.round-result-player, .round-result-ai {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 150px;
+    text-align: center;
+}
+
+.round-result-outcome {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Game Status Enhanced */
+.game-status {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-status h2 {
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.game-status p {
+    color: #cccccc;
+    font-size: 1.1em;
+}
+
+/* Button enhancements for property selection */
+.btn.property-btn {
+    background: linear-gradient(45deg, #8a2be2, #4169e1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn.property-btn:hover {
+    background: linear-gradient(45deg, #9932cc, #4682b4);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* Auto-play message styling */
+.auto-play-message {
+    background: rgba(255, 193, 7, 0.9);
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid #ffeb3b;
+}

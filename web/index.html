@@ -81,21 +81,20 @@
         </div>
     </div>
 
-    <!-- Shared Core Game Engine (Load First) -->
+    <!-- Shared Core Game Engine -->
     <script src="../shared/core/game-config.js"></script>
     <script src="../shared/core/card.js"></script>
     <script src="../shared/core/game-rules.js"></script>
     <script src="../shared/core/card-generator.js"></script>
-    
-    <!-- Shared AI Strategy -->
     <script src="../shared/ai/ai-strategy.js"></script>
-    
-    <!-- Shared Game Engine -->
     <script src="../shared/game-engine/round-manager.js"></script>
     <script src="../shared/game-engine/score-manager.js"></script>
     <script src="../shared/game-engine/match-manager.js"></script>
     
-    <!-- Web-Specific Game Logic -->
+    <!-- Web-Specific Classes (Load in Order) -->
+    <script src="js/ui-manager.js"></script>
+    <script src="js/game-state-manager.js"></script>
+    <script src="js/card-selection-manager.js"></script>
     <script src="js/web-game-controller.js"></script>
 </body>
 </html>
